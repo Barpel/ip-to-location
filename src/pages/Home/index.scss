@@ -1,0 +1,34 @@
+.homePage {
+    padding-left: 8px;
+    gap: 16px;
+
+    .inputRow {
+        gap: 16px;
+
+        .index {
+            font-size: 60px;
+        }
+
+        .removeButton {
+            opacity: 0;
+            visibility: hidden;
+            font-size: 32px;
+            border-radius: 50%;
+            height: 40px;
+            transition: opacity 0.3s;
+        }
+
+        &:hover {
+            .removeButton {
+                visibility: visible;
+                opacity: 1;
+            }
+        }
+
+        .fi {
+            background-size: contain;
+            background-position: 50%;
+            background-repeat: no-repeat;
+        }
+    }
+}

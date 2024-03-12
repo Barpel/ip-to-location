@@ -1,0 +1,20 @@
+@import '../../style/colors.scss';
+@import '../../style/animations.scss';
+
+.inputWrapper {
+    position: relative;
+    gap: 8px;
+    min-width: 240px;
+
+    .inputError {
+        border: 1px solid $errorColor;
+    }
+
+    .error {
+        position: absolute;
+        bottom: -20px;
+        color: $errorColor;
+        -webkit-animation: swing-in-top-fwd 0.5s cubic-bezier(0.175, 0.885, 0.320, 1.275) both;
+        animation: swing-in-top-fwd 0.5s cubic-bezier(0.175, 0.885, 0.320, 1.275) both;
+    }
+}

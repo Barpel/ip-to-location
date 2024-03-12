@@ -1,16 +1,17 @@
-import React from 'react';
-
 import './App.scss';
 import Home from './pages/Home';
 import NavBar from './layout/NavBar';
+import CacheProvider from './context/CacheContext';
+
 
 function App() {
   return (
-    <div className="App">
-      <NavBar />
-      <hr />
-      <Home></Home>
-    </div>
+    <CacheProvider>
+      <div className="App">
+        <NavBar />
+        <Home></Home>
+      </div>
+    </CacheProvider>
   );
 }
 

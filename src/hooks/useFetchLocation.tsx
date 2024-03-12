@@ -1,6 +1,4 @@
-import axios from 'axios';
-
-import React, { useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import useLoading from './useLoading';
 
 
@@ -22,44 +20,44 @@ export interface LocationData {
 }
 
 interface FetchDataResponse {
-    locationData: LocationData | null;
+    locationData?: LocationData;
     loading: boolean;
-    error: string | null;
+    error: string;
+    fetchData: (ipAddress: string) => void;
 }
 
 
-export const useFetchCountry = (ipAddress: string): FetchDataResponse => {
-    const [locationData, setLocationData] = useState<LocationData | null>(null);
-    const [error, setError] = useState<string | null>(null);
+export const useFetchLocation = (): FetchDataResponse => {
+    const [locationData, setLocationData] = useState<LocationData>();
+    const [error, setError] = useState<string>('');
     const { loading, startLoading, stopLoading } = useLoading();
 
     const URL = 'http://ip-api.com/json';
 
-    useEffect(() => {
+    const fetchData = useCallback(async (ipAddress: string) => {
         if (!ipAddress) return;
 
-        const fetchData = async () => {
-            startLoading();
-            setError(null);
+        startLoading();
+        setError('');
 
-            try {
-                const response = await fetch(`${URL}/${ipAddress}`);
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                const json = await response.json();
-                setLocationData(json);
-            } catch (err) {
-                if (err instanceof Error) setError(err.message);
-                else setError('An unknown error occurred');
-            } finally {
-                stopLoading();
+        try {
+            const response = await fetch(`${URL}/${ipAddress}`);
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
             }
-        };
+            const json = await response.json();
+            setLocationData(json);
+        } catch (err) {
+            if (err instanceof Error) setError(err.message);
+            else setError('An unknown error occurred');
+        } finally {
+            // simulate longer loading time 
+            setTimeout(() => { 
+                stopLoading();
+            }, 2000);
+        }
+    }, [startLoading, stopLoading]);
 
-        fetchData();
-    }, [ipAddress, startLoading, stopLoading]);
-
-    return { locationData, loading, error };
+    return { locationData, loading, error, fetchData };
 };
 

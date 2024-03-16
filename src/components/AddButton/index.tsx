@@ -6,9 +6,10 @@ import { Button } from '@mui/material';
 interface AddButtonProps {
   onClick: () => void;
   children?: React.ReactNode;
+  disabled?: boolean;
 }
 
-const AddButton: React.FC<AddButtonProps> = ({ onClick, children }) => {
+const AddButton: React.FC<AddButtonProps> = ({ onClick, disabled = false, children }) => {
 
   const defaultContent = (
     <>
@@ -19,9 +20,9 @@ const AddButton: React.FC<AddButtonProps> = ({ onClick, children }) => {
 
   return <Button
     className="addButton d-flex align-items-center justify-content-center"
-    variant="contained"
     size="large"
-    color="secondary"
+    color="primary"
+    disabled={disabled}
     onClick={onClick}>
     {children || defaultContent}
   </Button>;

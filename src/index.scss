@@ -1,8 +1,13 @@
-@import './Style/reset.scss';
-@import './Style/fonts.scss';
+@import './style/reset.scss';
+@import './style/fonts.scss';
+@import './style/colors.scss';
+@import '../node_modules/flag-icons/css/flag-icons.min.css';
 
-html, body {
+html,
+body {
     font-family: "Lato";
     font-weight: 400;
     font-style: normal;
+    background-color: $themeColor;
+    color: $textColor;
 }

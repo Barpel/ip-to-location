@@ -1,25 +1,25 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TextField } from '@mui/material';
 import './index.scss';
 import { LocationData, useFetchLocation } from '../../hooks/useFetchLocation';
 import { useCache } from '../../context/CacheContext';
+import Loader from '../Loader';
+import { useIPAddressValidation } from '../../hooks/useIPAddressValidation';
 
-// this can be moved to a shared file in case we want different validations for a generalized input
-const IP_REGEX = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
 
-export interface InputWithErrorProps {
-    inputId: string;
-    onBlur: (inputId: string, error: string, loading: Boolean, locationData?: LocationData) => void;
+export interface IPGeoLocationInputProps {
+    inputId: number;
+    onBlur: (inputId: number, error: string, locationData?: LocationData) => void;
 }
 
 
-const InputWithError: React.FC<InputWithErrorProps> = ({ inputId, onBlur }) => {
+const IPGeoLocationInput: React.FC<IPGeoLocationInputProps> = ({ inputId, onBlur }) => {
     const [ipAddress, setIpAddress] = useState<string>('');
     const [error, setError] = useState<string>('');
 
     const { fetchData, locationData, error: FetchingError, loading } = useFetchLocation()
 
-    const isValidIpAddress = useMemo(() => IP_REGEX.test(ipAddress), [ipAddress]);
+    const { isValidIpAddress } = useIPAddressValidation(ipAddress);
     const { cache, addToCache } = useCache();
 
     function handleInputChange(e: React.ChangeEvent<HTMLInputElement>): void {
@@ -42,26 +42,27 @@ const InputWithError: React.FC<InputWithErrorProps> = ({ inputId, onBlur }) => {
 
     useEffect(() => {
         if (locationData && !loading) {
-            onBlur(inputId, FetchingError, loading, locationData);
+            onBlur(inputId, FetchingError, locationData);
         }
-    }, [inputId, locationData, onBlur, loading, FetchingError])
+    }, [inputId, locationData, onBlur, FetchingError, loading])
 
 
     return (
-        <div className='inputWrapper d-flex justify-content-start flex-column'>
+        <div className='ipGeoLocationInput d-flex justify-content-start align-items-center flex-row'>
             <TextField
+                fullWidth
                 disabled={loading}
                 color={isValidIpAddress ? 'success' : 'secondary'}
-                fullWidth
                 label='IP Address'
                 error={!!error && !!ipAddress}
                 type="text" value={ipAddress}
                 InputProps={{ onBlur: () => handleBlur() }}
                 onFocus={() => setError('')}
                 onChange={handleInputChange} />
+            {loading && <Loader speed={0.78} loop={false} />}
             {!!error && <p className='error'>{error}</p>}
         </div>
     );
 };
 
-export default InputWithError;
+export default IPGeoLocationInput;

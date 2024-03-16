@@ -7,10 +7,10 @@ import CacheProvider from './context/CacheContext';
 function App() {
   return (
     <CacheProvider>
-      <div className="App">
+      <main className="App">
         <NavBar />
         <Home></Home>
-      </div>
+      </main>
     </CacheProvider>
   );
 }

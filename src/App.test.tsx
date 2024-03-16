@@ -1,9 +1,19 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+jest.mock('./layout/NavBar', () => () => <div data-testid="navBar">NavBar</div>);
+jest.mock('./pages/Home', () => () => <div data-testid="homePage">Home</div>);
+
+describe('App Component Tests', () => {
+  test('renders without crashing', () => {
+    render(<App />);
+    expect(screen.getByRole('main')).toBeInTheDocument();
+  });
+
+  test('renders NavBar and Home components', () => {
+    render(<App />);
+    expect(screen.getByTestId('navBar')).toBeInTheDocument();
+    expect(screen.getByTestId('homePage')).toBeInTheDocument();
+  });
+
 });

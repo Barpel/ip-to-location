@@ -1,7 +1,11 @@
+@import '../../style/colors.scss';
+
 .navBar {
+    background-color: $lightColor;
+    color: $textColor;
     padding: 8px 16px;
     min-height: 60px;
-    font-size: 24px;
+    font-size: 32px;
+    font-weight: 600;
     gap: 8px;
-    border-bottom: 1px solid black;
 }

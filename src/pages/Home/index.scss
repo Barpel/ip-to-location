@@ -1,34 +1,68 @@
+@import '../../style/colors.scss';
+@import '../../style/animations.scss';
+
 .homePage {
+    box-sizing: border-box;
     padding-left: 8px;
     gap: 16px;
 
-    .inputRow {
-        gap: 16px;
+    .coverImage {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        animation: move-position 14s both alternate-reverse 10;
+        opacity: 0.6;
+        border-radius: 16px;
+        left: 0;
+        will-change: background-position;
+    }
 
-        .index {
-            font-size: 60px;
-        }
+    .pageCover {
+        position: relative;
+        top: 48px;
+        background-color: $lightColor;
+        border-radius: 4px;
+        padding: 8px 16px;
+        box-shadow: 0 0 1px 1px #00000012;
 
-        .removeButton {
-            opacity: 0;
-            visibility: hidden;
-            font-size: 32px;
-            border-radius: 50%;
-            height: 40px;
-            transition: opacity 0.3s;
+        .coverAnimation {
+            position: absolute;
+            top: 20px;
+            right: -150px;
+            transform: rotateY(180deg);
+            width: 350px;
         }
+    }
 
-        &:hover {
-            .removeButton {
-                visibility: visible;
-                opacity: 1;
-            }
-        }
+    .pageTitle {
+        font-size: 24px;
+        margin: 16px 0;
+    }
 
-        .fi {
-            background-size: contain;
-            background-position: 50%;
-            background-repeat: no-repeat;
+    .dataContainer {
+        display: grid;
+        position: fixed;
+        top: 50%;
+        transform: translateY(-50%);
+        min-width: 70vw;
+        margin: 24px;
+        min-height: 50vh;
+        background-color: #fff;
+        border-radius: 4px;
+        box-shadow: 0px 0px 10px 8px rgba(0, 0, 0, 0.1254901961);
+        padding: 16px;
+
+        .ipRowsContainer {
+            width: 100%;
+            display: grid;
+            grid-gap: 24px 16px;
+            grid-template-columns: repeat(3, 1fr);
         }
+    }
+
+    .addButton {
+        justify-self: center;
+        margin-top: 16px;
     }
 }

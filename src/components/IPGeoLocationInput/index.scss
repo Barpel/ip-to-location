@@ -1,13 +1,19 @@
 @import '../../style/colors.scss';
 @import '../../style/animations.scss';
 
-.inputWrapper {
+.ipGeoLocationInput {
     position: relative;
     gap: 8px;
-    min-width: 240px;
+    width: 100%;
+    max-width: 320px;
 
     .inputError {
         border: 1px solid $errorColor;
+    }
+
+    .Loader {
+        position: absolute;
+        right: 5px;
     }
 
     .error {
